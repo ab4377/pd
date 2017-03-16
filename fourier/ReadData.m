@@ -16,12 +16,20 @@ ntags = length(tags);
 tagged = {};
 
 % Matching the tags with the raw data -- the tagged 
-% array will contain accelerometer data for 42 separate 
-% activities 
-for t=1:ntags
-  tagged{t}=data((tags(t,1)+1):tags(t,2) , :);
+% array will contain accelerometer data for 22 separate 
+% activities. The tagged.csv file contains 42 activities, but 40 of them 
+% are just duplicates of each other.
+for t=1:22
+  if ( (t >= 1) && (t <= 3) )
+    tagged{t}= data([ (tags(t,1)+1):tags(t,2) (tags(t+22,1) + 1): tags(t+22,2)] , :);
+  elseif ( (t >= 6 ) && ( t <= 22)) 
+    tagged{t}= data([ (tags(t,1)+1):tags(t,2) (tags(t+20,1) + 1): tags(t+20,2)] , :);
+  else 
+    tagged{t} = data((tags(t,1)+1):tags(t,2),:);
+  end
 end
 
+%{
 % Batch the time series into batches of batch_l observations
 % which is approximately (1/50) sec * 1000 = 20 secs.
 tot_l=length(data); %total length of raw data
@@ -30,3 +38,4 @@ batched = {}; % array of batches
 for t=1:floor(tot_l/batch_l)
     batched{t} = data( ((t-1)*batch_l+1):t*batch_l,:);
 end
+%}

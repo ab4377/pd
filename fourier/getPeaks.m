@@ -1,5 +1,14 @@
-% this function extract peaks from the fourier transform 
 function [peakPara] = getPeaks (x1, f1)
+%==========================================================================
+% This function extract peaks from the fast fourier transform.
+%==============================PARAMETERS==================================
+% 1. x1: frequency spectrum
+% 2. f1: amplitude at each frequency
+%========================RETURN VALUES=====================================
+% Returns a cell array, each containing a matrix. The matrix in the cell
+% arrays are the peak location, peak width, and peak amplitude for each 
+% frequency.
+%==========================================================================
 
 % get peaks for x  
 [pks1,loc1,wid1,p1]=findpeaks(x1(:,1),f1,'MinPeakProminence',0.002,'MinPeakDistance',0.05);
@@ -26,8 +35,8 @@ widz=nonzeros(wid1.*(loc1<7 & loc1>0));
 % Return the results: prominent peaks of amplitude between 0 and 7 for x,
 % y, z
 peakPara = cell(3,1);
-peakPara{1} = table(fx,pksx,widx, 'VariableNames', {'fx', 'pksx', 'widx'});
-peakPara{2} = table(fy,pksy,widy, 'VariableNames', {'fy', 'pksy', 'widy'});
-peakPara{3} = table(fz,pksz,widz, 'VariableNames', {'fz', 'pksz', 'widz'});
+peakPara{1} = cat(2,fx,pksx,widx);
+peakPara{2} = cat(2,fy,pksy,widy);
+peakPara{3} = cat(2,fz,pksz,widz);
 
 end

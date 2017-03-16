@@ -27,8 +27,7 @@ P1 = P2(1:L/2+1,:); % Get the one-sided amplitude spectrum, since the
 
 P1(2:end-1,:) = 2*P1(2:end-1,:); % Multiply amplitude by 2 to get the
                                  % "T
-x=P1;
+x=P1; % return the amplitude
 f=fs*(0:L/2)/L; % generate a vector of frequency
-f=f.'; %transposing the frequency array
+f=f.'; %transposing the frequency array and return it[x
 end
-%[x,y]=mscohere(c1,c2,hamming(50),20,fi,50)
