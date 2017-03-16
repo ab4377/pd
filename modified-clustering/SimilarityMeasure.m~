@@ -1,0 +1,7 @@
+function [ output_args ] = SimilarityMeasure(activities)
+    %SimilarityMeasure
+    %Inputs are the activities which is a cell arary
+    %frequency values
+   
+end
+
