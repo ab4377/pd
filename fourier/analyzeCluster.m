@@ -1,5 +1,6 @@
-function [clusterComp] = analyzeCluster(nclus, assigns, labels, num_acts, cnt_list)
-% examine at the composition of the clusters
+function [clusterComp, batchInfo] = analyzeCluster(nclus, assigns, labels, num_acts, cnt_list)
+% examine at the composition of the clusters and return a table with 
+% information about each batch
 clusterComp = zeros(nclus, num_acts+1);
 % cluster_comp is the matrix of cluster compostion. Each row represents 
 % the composition of a cluster. Each column represents the proportion that 
@@ -20,5 +21,8 @@ for i = 1:nclus
         end
     end
 end
+
+batchNum = (1:length(assigns)).';
+batchInfo = table(batchNum, labels.', assigns.', 'VariableNames', {'batchNum', 'activityLabel', 'clusterAssign'});
 
 end

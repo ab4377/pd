@@ -1,11 +1,9 @@
-load('batches.mat');
-
+function [clusterComp, batchInfo, batchData, top_freq] = cluster(batches, nclus, sample_size)
 % extract labels and accelerometer data from `batches`  
 num_acts = length(batches);
 batchData = {}; % cell array storing batches
 batchLabels = []; % array of labels for batches
 batch_count = 0; % count the number of batches
-sample_size = 4; % sample size for each activity 
 for i = 1:num_acts
     sample = min(sample_size, length(batches{i}));
     for j = 1:sample
@@ -15,7 +13,8 @@ for i = 1:num_acts
     end
 end
 
-nclus = 22;
-[assigns, centroids, cnt_list] = getKMeans(batchData, nclus);
+[assigns, centroids, cnt_list, top_freq] = getKMeans(batchData, nclus);
 
-clusterComp = analyzeCluster(nclus, assigns, batchLabels, num_acts, cnt_list);
+[clusterComp, batchInfo] = analyzeCluster(nclus, assigns, batchLabels, num_acts, cnt_list);
+
+end

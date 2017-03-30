@@ -1,4 +1,4 @@
-function [ assigns, centroids, cnt_list ] = getKMeans( pts, clus )
+function [ assigns, centroids, cnt_list, top_freq] = getKMeans( pts, clus )
 %=============================================================%
 % This function performs k-means clustering using time slices as points
 %========================PARAMETERS==============================
@@ -22,7 +22,7 @@ n=length(pts);
 profiles = cell(n,1); 
 ffts = cell(n,1);
 ft = []; % frequency array
-t_num = 15; % the number of top frequencies.
+t_num = 10; % the number of top frequencies.
 
 % for all samples
 for i=1:n
@@ -104,5 +104,8 @@ for i = 1:clus
 end
 %=====================================================
 
+top_freq = f_t;
+
+fprintf('t_num: %d\n', t_num);
 end
 

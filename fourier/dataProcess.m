@@ -15,9 +15,9 @@ activityInfo = table(activityNum, activityLength);
 batches = cell(len, 1); % batches = array that stores the batches for each 
                         % activity in a single cell
 
-batch_l = 200; % set batch length                        
+batch_l = 500; % set batch length                        
 for act=1:len
-    tot_l=1500; %total length of raw data for the current activity
+    tot_l=activityLength(act); %total length of raw data for the current activity
     batch_num = floor(tot_l/batch_l); % batch_num = number of batches that will be generated 
                                     % for current activity
     batches{act} = cell(1, batch_num); % batches{act} = cell array containing 
@@ -29,7 +29,8 @@ for act=1:len
         % during the batch.
         batches{act}{t} = cell(1,2); 
         batches{act}{t}{1,1} = act;
-        batches{act}{t}{1,2} = data( ((t-1)*batch_l+1):t*batch_l,:);
+        batches{act}{t}{1,2} = tagged{act}( ((t-1)*batch_l+1):(t*batch_l),:);
     end
         
+    save('batches.mat','batches');
 end
