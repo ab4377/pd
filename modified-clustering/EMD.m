@@ -1,4 +1,4 @@
-function [ emd ] = EMD(amp1, f1, amp2, f2)
+function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
     %EMD for two signals based on their frequency spectrum 
     %Inputs are amplitudes and frequencies
     
@@ -8,10 +8,10 @@ function [ emd ] = EMD(amp1, f1, amp2, f2)
     X = zeros(size(f1)); %store the freq. as the data points which need to be moved
     count = 1;
     for j=1:length(amp1)
-       if(amp1(j) <= 0.05)
+       if(amp1(j) <= noiseCancellationParameter)
            continue;
        else
-           W1(count) = amp1(j) - 0.05;
+           W1(count) = amp1(j) - noiseCancellationParameter;
            X(count) = f1(j);
            count = count + 1;
        end
@@ -23,12 +23,13 @@ function [ emd ] = EMD(amp1, f1, amp2, f2)
    
     W2 = zeros(size(amp2));
     Y = zeros(size(f2));
+    
     count = 1;
     for j=1:length(amp2)
-       if(amp2(j) <= 0.05)
+       if(amp2(j) <= noiseCancellationParameter)
            continue;
        else
-           W2(count) = amp2(j) - 0.05;
+           W2(count) = amp2(j) - noiseCancellationParameter;
            Y(count) = f2(j);
            count = count + 1;
        end
@@ -41,17 +42,22 @@ function [ emd ] = EMD(amp1, f1, amp2, f2)
     %Calculate the distance matrix
     %We will be using the euclidean distance as the ground distance
     %Since, what we have is 1-dimensional, we get simply |X(i) - Y(j)|
-    [m,~] = size(X);
-    [n,~] = size(Y);
+    %[m,~] = size(X);
+    m = numel(X);
+    %[n,~] = size(Y);
+    n = numel(Y);
     D = zeros(m,n);
     for i=1:m
+        %disp('size');
+        %disp(n);
         for j=1:n
             D(i,j) = abs(X(i) - Y(j));
         end
     end
     D = D';
     D = D(:);
-    
+    str = strcat('m = ',num2str(m),',n = ',num2str(n));
+    disp(str);
     % inequality constraints
     A1 = zeros(m, m * n);
     A2 = zeros(n, m * n);
@@ -73,8 +79,21 @@ function [ emd ] = EMD(amp1, f1, amp2, f2)
     lb = zeros(1, m * n);
     
     %linear programming
-    [x, fval] = linprog(D, A, b, Aeq, beq, lb);
-    %disp(fval);
-    emd = fval / sum(x);
+    %case where m = n = 0. Note that m and n are positive integers
+%     disp('Reached till this point');
+%     subplot(2,1,1);
+%     plot(f1,amp1);
+%     subplot(2,1,2);
+%     plot(f2,amp2);
+    if(m+n == 0)
+        emd = 0;
+    %this means either m or n is 0 but not both in which case emd is Inf
+    elseif(and(m + n > 0, m*n==0) == 1)
+        emd = Inf;
+    else
+        [x, fval] = linprog(D, A, b, Aeq, beq, lb);
+        %x is the flow value;
+        emd = fval / sum(x);
+    end
 end
 
