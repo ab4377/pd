@@ -1,7 +1,8 @@
 function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
+    %Important - The input have to be column vectors
     %EMD for two signals based on their frequency spectrum 
     %Inputs are amplitudes and frequencies
-    
+    %Two signals need not have same size
     %Remove the additive noise in the signal and add it to the array W 
     %preallocate the array X
     W1 = zeros(size(amp1)); %store the amplitudes as weights
@@ -18,8 +19,14 @@ function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
     end
     %Now truncate the array to required size
     index = find(W1 == 0,1,'first');
-    W1 = W1(1:index);
-    X = X(1:index);
+    
+    %this step is important because, sometimes, element zero may not be
+    %present in the weigths
+    if(~isempty(index))
+        W1 = W1(1:index);
+        X = X(1:index);
+    end
+    
    
     W2 = zeros(size(amp2));
     Y = zeros(size(f2));
@@ -36,8 +43,11 @@ function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
     end
     %Now truncate the array to required size
     index = find(W2 == 0,1,'first');
-    W2 = W2(1:index);
+    
+    if(~isempty(index))
+        W2 = W2(1:index);
     Y = Y(1:index);
+    end
     
     %Calculate the distance matrix
     %We will be using the euclidean distance as the ground distance
@@ -56,8 +66,8 @@ function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
     end
     D = D';
     D = D(:);
-    str = strcat('m = ',num2str(m),',n = ',num2str(n));
-    disp(str);
+    %str = strcat('m = ',num2str(m),',n = ',num2str(n));
+    %disp(str);
     % inequality constraints
     A1 = zeros(m, m * n);
     A2 = zeros(n, m * n);
