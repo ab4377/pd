@@ -7,7 +7,7 @@ n=length(a);
 
 % set sampling frequency and times: frequency is 100Hz, and the time (interval) is
 % 1/100 = 0.01 secs
-fs=100;
+fs=99;
 ts=1/fs;
 
 L=n;

@@ -2,8 +2,9 @@ function [X] = GenerateData(fileName)
     
     disp('Reading raw data');
     data = csvread(fileName,1,1);
-    frequency = 100;
-    numberOfSeconds = 10;
+    %frequency = 99;
+    %numberOfSeconds = 10;
+    [frequency,numberOfSeconds] = ParseXMLFile();
     [m,~] = size(data);
     i = 0;
     %the feature vector is dimension equal to 3*(size(ampx) + size(fx))
@@ -13,13 +14,10 @@ function [X] = GenerateData(fileName)
     while((i+1)*frequency*numberOfSeconds <= m)
         startIndex = i*frequency*numberOfSeconds + 1;
         endIndex = (i+1)*frequency*numberOfSeconds;
-        [ampx,fx] = FreqAnalysis2(data(startIndex:endIndex,1));
-        [ampy,fy] = FreqAnalysis2(data(startIndex:endIndex,2));
-        [ampz,fz] = FreqAnalysis2(data(startIndex:endIndex,3));
-        %break;
+        [ampx,~] = FreqAnalysis2(data(startIndex:endIndex,1));
+        [ampy,~] = FreqAnalysis2(data(startIndex:endIndex,2));
+        [ampz,~] = FreqAnalysis2(data(startIndex:endIndex,3));
         i = i + 1;
-        %size([ampx',fx',ampy',fy',ampz',fz'])
-        %X(i,:) = [ampx',fx',ampy',fy',ampz',fz'];
         X(i,:) = [ampx',ampy',ampz'];
     end
 end

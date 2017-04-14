@@ -86,24 +86,33 @@ function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
     beq = ones(m + n, 1) * min(sum(W1), sum(W2));
     
     %lower bound
-    lb = zeros(1, m * n);
-    
+    %lb = zeros(1, m * n);
+    lb = zeros(m*n,1);
+    t = m*n;
     %linear programming
     %case where m = n = 0. Note that m and n are positive integers
-%     disp('Reached till this point');
-%     subplot(2,1,1);
-%     plot(f1,amp1);
-%     subplot(2,1,2);
-%     plot(f2,amp2);
     if(m+n == 0)
         emd = 0;
     %this means either m or n is 0 but not both in which case emd is Inf
     elseif(and(m + n > 0, m*n==0) == 1)
         emd = Inf;
     else
-        [x, fval] = linprog(D, A, b, Aeq, beq, lb);
+        %[x, fval, exitflag, output] = linprog(D, A, b, Aeq, beq, lb);
         %x is the flow value;
-        emd = fval / sum(x);
+        %emd1 = fval / sum(x);
+        %disp(sum(x));
+        %disp(fval);
+        cvx_begin quiet
+            variable x(t);
+            minimize (D'*x);
+            subject to
+                A*x <= b;
+                Aeq*x == beq;
+                x >= lb;
+        cvx_end
+        emd = D'*x/sum(x);
+        %disp(sum(x));
+        %disp(D'*x);
     end
 end
 
