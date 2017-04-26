@@ -1,9 +1,11 @@
-function [] = SVM()
-    %clf = fitcsvm(XTrain,yTrain,'KernelFunction','rbf','Standardize',true);
+function [] = SVM(XTrain,yTrain,XTest,yTest)
+    %This is SVM binary classifier
     
-    [XTrain,yTrain,XTest,yTest] = GenerateTrainingData();
-    clf = fitcsvm(XTrain,yTrain,'KernelFunction','rbf','Standardize',false);
-    %clf = fitcsvm(XTrain,yTrain,'KernelFunction','EMDKernel','Standardize',false);
+    %clf = fitcsvm(XTrain,yTrain,'KernelFunction','rbf','Standardize',true);
+    %[XTrain,yTrain,XTest,yTest] = GenerateTrainingData();
+    %clf = fitcsvm(XTrain,yTrain,'KernelFunction','rbf','Standardize',false);
+    
+    clf = fitcsvm(XTrain,yTrain,'KernelFunction','EMDKernel','Standardize',false);
     [labels,scores] = predict(clf,XTrain);
     correct = sum(yTrain == labels);
     disp('training accuracy');

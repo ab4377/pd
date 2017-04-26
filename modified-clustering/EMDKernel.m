@@ -35,6 +35,7 @@ function [G] = EMDKernel(U,V)
             e3 = EMD(ampz1',f,ampz2',f,0.05);
             %disp(e3);
             G(i,j) = (e1+e2+e3)/3;
+            %G(i,j) = 1/G(i,j);
         end
         G(i,i) = 0;
     end
