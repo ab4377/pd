@@ -1,12 +1,6 @@
-function [XTrain,yTrain,XTest,yTest] = GenerateTrainingData()
-    
-    X1 = GenerateData('Data/Avinash/avinash-upstairs-1.csv');
-    X1 = [X1;GenerateData('Data/Avinash/avinash-upstairs-2.csv')];
+function [XTrain,yTrain,XTest,yTest] = GenerateTrainingDatav2()
     
     X2 = GenerateData('Data/Avinash/avinash-standing.csv');
-    
-    X3 = GenerateData('Data/Avinash/avinash-downstairs-1.csv');
-    X3 = [X3;GenerateData('Data/Avinash/avinash-downstairs-2.csv')];
     
     X4 = GenerateData('Data/Avinash/avinash-sit-to-stand-1.csv');
     X4 = [X4;GenerateData('Data/Avinash/avinash-sit-to-stand-2.csv')];
