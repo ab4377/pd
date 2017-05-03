@@ -1,8 +1,8 @@
 function [] = MultiClassClassification(XTrain,yTrain,XTest,yTest)
     %MULTICLASSCLASSIFICATION Summary of this function goes here
     
-    %t = templateSVM('Standardize',0,'KernelFunction','gaussian');
-    t = templateSVM('Standardize',0,'KernelFunction','EMDKernel');
+    t = templateSVM('Standardize',0,'KernelFunction','gaussian');
+    %t = templateSVM('Standardize',0,'KernelFunction','EMDKernel');
     ecocClf = fitcecoc(XTrain,yTrain,'Learners',t);
     [labels,scores] = predict(ecocClf,XTrain);
     
