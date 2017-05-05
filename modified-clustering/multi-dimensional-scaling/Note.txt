@@ -1,0 +1,5 @@
+The figures are generated using the following settings
+<properties>
+	<frequency>99</frequency>
+	<seconds>3</seconds>
+</properties>

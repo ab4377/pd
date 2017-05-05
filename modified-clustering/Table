@@ -13,3 +13,14 @@ Time Slice,Testing accuracy
 9s,0.5214
 10s,0.5192
 11s,0.4848
+
+Confusion Matrix
+Time slice
+HMM partially done
+The sequence output of the SVM
+
+Try
+===
+RBF + EMD with different weighting factor
+
+

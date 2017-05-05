@@ -15,7 +15,7 @@ function [predictedLabels, trueLabels, posterior, ecocClf] = MultiClassClassific
     disp('testing accuracy');
     disp(correct/size(yTest,1));
     
-    trueLabels      = yTest;
+    trueLabels = yTest;
     
     [predictedLabels, ~, ~, posterior] = predict(ecocClf, XTest, 'Verbose', 1);
 end

@@ -1,11 +1,11 @@
 function [XTrain,yTrain,XTest,yTest] = GenerateTrainingDataForBinaryClassifier()
+    %this function is used to generate data for binary classifier
+    %class labels are +1 and -1
+    X1 = GenerateData('Data/Avinash/avinash-walking-counting.csv');
+    %X1 = [X1;GenerateData('Data/Avinash/avinash-upstairs-2.csv')];
     
-    %X1 = GenerateData('Data/Avinash/avinash-walking-counting.csv');
-    X1 = GenerateData('Data/Avinash/avinash-upstairs-1.csv');
-    X1 = [X1;GenerateData('Data/Avinash/avinash-upstairs-2.csv')];
-    
-    X2 = GenerateData('Data/Avinash/avinash-downstairs-1.csv');
-    X2 = [X2;GenerateData('Data/Avinash/avinash-downstairs-2.csv')];
+    X2 = GenerateData('Data/Avinash/avinash-walking-raw.csv');
+    %X2 = [X2;GenerateData('Data/Avinash/avinash-downstairs-2.csv')];
     [m,~] = size(X1);
     trainSize = floor(0.7*m);
     X1Test = X1(trainSize+1:end,:);
