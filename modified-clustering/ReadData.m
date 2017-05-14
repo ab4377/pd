@@ -24,7 +24,7 @@ function [fx1,fx2] = ReadData()
     end
     
     size(taggedActivities{1}(1:end,1))
-    %matrix = SimilarityMeasure(taggedActivities);
+    matrix = SimilarityMeasure(taggedActivities);
     [~,fx1] = freqAnalysis(taggedActivities{1}(1:end,1));
     %disp(fx1);
     [~,fx2] = freqAnalysis(taggedActivities{10}(1:end,1));

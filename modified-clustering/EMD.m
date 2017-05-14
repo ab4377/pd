@@ -23,8 +23,8 @@ function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
     %this step is important because, sometimes, element zero may not be
     %present in the weigths
     if(~isempty(index))
-        W1 = W1(1:index);
-        X = X(1:index);
+        W1 = W1(1:index-1);
+        X = X(1:index-1);
     end
     
    
@@ -45,8 +45,8 @@ function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
     index = find(W2 == 0,1,'first');
     
     if(~isempty(index))
-        W2 = W2(1:index);
-    Y = Y(1:index);
+        W2 = W2(1:index-1);
+    Y = Y(1:index-1);
     end
     
     %Calculate the distance matrix
@@ -102,15 +102,22 @@ function [ emd ] = EMD(amp1, f1, amp2, f2, noiseCancellationParameter)
         %emd1 = fval / sum(x);
         %disp(sum(x));
         %disp(fval);
-        cvx_begin quiet
-            variable x(t);
-            minimize (D'*x);
-            subject to
-                A*x <= b;
-                Aeq*x == beq;
-                x >= lb;
-        cvx_end
-        emd = D'*x/sum(x);
+        if(D == 0)
+            emd = 0;
+        else    
+            cvx_begin quiet
+                variable x(t);
+                minimize (D'*x);
+                subject to
+                    A*x <= b;
+                    Aeq*x == beq;
+                    x >= lb;
+            cvx_end
+            emd = D'*x/sum(x);
+            if(isnan(emd))
+                emd = 0;
+            end
+        end
         %disp(sum(x));
         %disp(D'*x);
     end

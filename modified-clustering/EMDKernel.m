@@ -12,9 +12,9 @@ function [G] = EMDKernel(U,V)
     L = fs*numberOfSeconds;
     f = fs*(0:L/2)/L; % generate a vector of frequency
     f = f.'; %transposing the frequency array
-    disp('called');
+    %disp('called');
     for i=1:u1
-        for j=i+1:v1
+        for j=1:v1
             str = strcat('Calculating for data sample ',num2str(i),'and ',num2str(j));
             disp(str);
             %disp(i);
@@ -37,7 +37,7 @@ function [G] = EMDKernel(U,V)
             G(i,j) = (e1+e2+e3)/3;
             %G(i,j) = 1/G(i,j);
         end
-        G(i,i) = 0;
+        %G(i,i) = 0;
     end
     %disp('completed');
 end
