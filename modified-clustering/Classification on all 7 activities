@@ -1,0 +1,44 @@
+Classification on all 7 activities
+===================================
+Training
+Accuracy with RBF - 100
+
+Testing
+Accuracy with RBF - 52.70
+
+Classification on all 6 six activities
+=====================================
+
+Training
+Accuracy with RBF - 100
+
+Testing
+Accuracy with EMD = 58.70
+
+Classification on all 7 activities
+===================================
+Training
+Accuracy with EMD - 19.81
+
+Testing
+Accuracy with EMD - 19.81
+
+Classification on all 6 six activities
+=====================================
+Training
+Accuracy with EMD - 17.50
+
+Testing
+Accuracy with EMD - 17.31
+
+
+To Do
+=====
+1) Use RBF kernel to perform MDS
+2) Combining RBF + EMD with a weighting factor
+3) Choosing the best time slice
+4) Multi-class classification
+	- One Against All
+	- ECOC
+	- 
+
